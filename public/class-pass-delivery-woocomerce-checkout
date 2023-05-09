@@ -121,5 +121,16 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
                 $error->add('validation', '<strong>Shipping Building Number </strong>is a required field.');
             }
         }
+
+        function action_woocommerce_after_checkout_validation($data, $error)
+        {
+            if ($data['billing_country'] == 'QA') {
+                $this->validate_billing_blue_plate($data, $error);
+            }
+            if ($data['shipping_country'] == 'QA' && $_POST['ship_to_different_address']) {
+                $this->validate_shipping_blue_plate($data, $error);
+            }
+        }
+
     }
 }
