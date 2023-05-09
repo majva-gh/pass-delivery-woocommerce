@@ -47,5 +47,45 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
                 'custom_attributes' => array('min' => 1, 'max' => 999)
             );
         }
+
+        private function add_billing_fields(&$fields)
+        {
+            //add zone number to billing section 
+            $fields['billing']['billing_zone_number'] = array(
+                'label'     => __('Zone number', 'woocommerce'),
+                'placeholder'   => _x('Zone number', 'placeholder', 'woocommerce'),
+                'required'  => false,
+                'class'     => array('form-row-wide', 'billing-blueplate'),
+                'clear'     => true,
+                'type'         => 'number',
+                'validate'          => array('required'),
+                'custom_attributes' => array('min' => 1, 'max' => 999)
+            );
+
+            //add street number to billing section 
+            $fields['billing']['billing_street_number'] = array(
+                'label'     => __('Street number', 'woocommerce'),
+                'placeholder'   => _x('Street number', 'placeholder', 'woocommerce'),
+                'required'  => false,
+                'class'     => array('form-row-wide', 'billing-blueplate'),
+                'clear'     => true,
+                'type'         => 'number',
+                'validate'          => array('required'),
+                'custom_attributes' => array('min' => 1, 'max' => 999)
+            );
+
+            //add street number to billing section 
+            $fields['billing']['billing_building_number'] = array(
+                'label'     => __('Bulding number', 'woocommerce'),
+                'placeholder'   => _x('Building number', 'placeholder', 'woocommerce'),
+                'required'  => false,
+                'class'     => array('form-row-wide', 'billing-blueplate'),
+                'clear'     => true,
+                'type'         => 'number',
+                'validate'          => array('required'),
+                'custom_attributes' => array('min' => 1, 'max' => 999)
+
+            );
+        }
     }
 }
