@@ -5,7 +5,7 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
 
         public function __construct()
         {
-            add_filter('woocommerce_get_country_locale', array($this,'optional_postcode_in_qatar'));
+            add_filter('woocommerce_get_country_locale', array($this, 'optional_postcode_in_qatar'));
 
             add_filter('woocommerce_checkout_fields', array($this, 'custom_override_checkout_fields'));
 
@@ -17,7 +17,7 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
         function optional_postcode_in_qatar($locales)
         {
             $locales['QA']['postcode']['required'] = false;
-                return $locales;
+            return $locales;
         }
 
         private function add_shipping_fields(&$fields)
@@ -150,7 +150,7 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
             <script>
                 (function($) {
                     $(document).ready(function() {
-                        
+
                         billing_required_or_optional(); //this calls it on load
                         shipping_required_or_optional(); //this calls it on load
 
@@ -217,6 +217,5 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
             </script>
 <?php
         }
-
     }
 }
