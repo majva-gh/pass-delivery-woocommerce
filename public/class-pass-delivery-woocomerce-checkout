@@ -6,6 +6,8 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
         public function __construct()
         {
             add_filter('woocommerce_get_country_locale', array($this,'optional_postcode_in_qatar'));
+
+            add_filter('woocommerce_checkout_fields', array($this, 'custom_override_checkout_fields'));
         }
 
         function optional_postcode_in_qatar($locales)
