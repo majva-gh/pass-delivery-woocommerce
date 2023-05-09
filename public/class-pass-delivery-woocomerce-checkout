@@ -95,5 +95,18 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
 
             return $fields;
         }
+
+        private function validate_billing_blue_plate($data, $error)
+        {
+            if (empty($data['billing_zone_number'])) {
+                $error->add('validation', '<strong>Billing Zone Number </strong>is a required field.');
+            }
+            if (empty($data['billing_street_number'])) {
+                $error->add('validation', '<strong>Billing Street Number </strong>is a required field.');
+            }
+            if (empty($data['billing_building_number'])) {
+                $error->add('validation', '<strong>Billing Building Number </strong>is a required field.');
+            }
+        }
     }
 }
