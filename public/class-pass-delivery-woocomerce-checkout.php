@@ -1,6 +1,6 @@
 <?php
-if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
-    class Pass_Delivery_Woocomerce_Checkout
+if (!class_exists('Pass_Delivery_Woocommerce_Checkout')) {
+    class Pass_Delivery_Woocommerce_Checkout
     {
 
         public function __construct()
