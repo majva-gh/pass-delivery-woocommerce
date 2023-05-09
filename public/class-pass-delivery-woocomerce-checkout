@@ -9,5 +9,43 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
                 return $locales;
         }
 
+        private function add_shipping_fields(&$fields)
+        {
+            //add zone number to shipping section 
+            $fields['shipping']['shipping_zone_number'] = array(
+                'label'     => __('Zone number', 'woocommerce'),
+                'placeholder'   => _x('Zone number', 'placeholder', 'woocommerce'),
+                'required'  => false,
+                'class'     => array('form-row-wide', 'shipping-blueplate'),
+                'clear'     => true,
+                'type'         => 'number',
+                'validate'          => array('required'),
+                'custom_attributes' => array('min' => 1, 'max' => 999)
+            );
+
+            //add street number to shipping section 
+            $fields['shipping']['shipping_street_number'] = array(
+                'label'     => __('Street number', 'woocommerce'),
+                'placeholder'   => _x('Street number', 'placeholder', 'woocommerce'),
+                'required'  => false,
+                'class'     => array('form-row-wide', 'shipping-blueplate'),
+                'clear'     => true,
+                'type'         => 'number',
+                'validate'          => array('required'),
+                'custom_attributes' => array('min' => 1, 'max' => 999)
+            );
+
+            //add street number to shipping section 
+            $fields['shipping']['shipping_building_number'] = array(
+                'label'     => __('Bulding number', 'woocommerce'),
+                'placeholder'   => _x('Building number', 'placeholder', 'woocommerce'),
+                'required'  => false,
+                'class'     => array('form-row-wide', 'shipping-blueplate'),
+                'clear'     => true,
+                'type'         => 'number',
+                'validate'          => array('required'),
+                'custom_attributes' => array('min' => 1, 'max' => 999)
+            );
+        }
     }
 }
