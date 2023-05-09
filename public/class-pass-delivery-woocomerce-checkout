@@ -132,5 +132,80 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
             }
         }
 
+        function action_woocommerce_after_order_notes($checkout)
+        {
+
+?>
+            <script>
+                (function($) {
+                    $(document).ready(function() {
+                        
+                        billing_required_or_optional(); //this calls it on load
+                        shipping_required_or_optional(); //this calls it on load
+
+                        $('#billing_country').change(billing_required_or_optional);
+                        $('#shipping_country').change(shipping_required_or_optional);
+
+                        function billing_required_or_optional() {
+
+                            if ($('#billing_country').val() == 'QA') {
+
+                                $('.billing-blueplate :input').
+                                each((index, element) => {
+                                    $("#" + element.id).parent().parent().show();
+                                    $("#" + element.id).prop('required', true);
+                                    $('label[for="' + element.id + '"]').append('<abbr class="required" title="required">*</abbr>')
+                                    $('label[for="' + element.id + '"] .optional').remove();
+
+                                });
+
+                            } else {
+                                $('.billing-blueplate :input').
+                                each((index, element) => {
+                                    $("#" + element.id).parent().parent().hide();
+                                    $("#" + element.id).removeProp('required');
+                                    $('label[for="' + element.id + '"] .required').remove();
+
+                                    // Avoid append this multiple times
+                                    if ($('label[for="' + element.id + '"] .optional').length == 0) {
+                                        $('label[for="' + element.id + '"]').append('<span class="optional">(optional)</span>');
+                                    }
+
+                                });
+                            }
+                        };
+
+                        function shipping_required_or_optional() {
+                            if ($('#shipping_country').val() == 'QA') {
+                                $('.shipping-blueplate :input').
+                                each((index, element) => {
+                                    $("#" + element.id).parent().parent().show();
+                                    $("#" + element.id).prop('required', true);
+                                    $('label[for="' + element.id + '"]').append('<abbr class="required" title="required">*</abbr>')
+                                    $('label[for="' + element.id + '"] .optional').remove();
+
+                                });
+
+                            } else {
+                                $('.shipping-blueplate :input').
+                                each((index, element) => {
+                                    $("#" + element.id).parent().parent().hide();
+                                    $("#" + element.id).removeProp('required');
+                                    $('label[for="' + element.id + '"] .required').remove();
+
+                                    // Avoid append this multiple times
+                                    if ($('label[for="' + element.id + '"] .optional').length == 0) {
+                                        $('label[for="' + element.id + '"]').append('<span class="optional">(optional)</span>');
+                                    }
+
+                                });
+                            }
+                        }
+                    });
+                })(jQuery);
+            </script>
+<?php
+        }
+
     }
 }
