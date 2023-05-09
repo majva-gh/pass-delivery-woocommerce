@@ -108,5 +108,18 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
                 $error->add('validation', '<strong>Billing Building Number </strong>is a required field.');
             }
         }
+
+        private function validate_shipping_blue_plate($data, $error)
+        {
+            if (empty($data['shipping_zone_number'])) {
+                $error->add('validation', '<strong>Shipping Zone Number </strong>is a required field.');
+            }
+            if (empty($data['shipping_street_number'])) {
+                $error->add('validation', '<strong>Shipping Street Number </strong>is a required field.');
+            }
+            if (empty($data['shipping_building_number'])) {
+                $error->add('validation', '<strong>Shipping Building Number </strong>is a required field.');
+            }
+        }
     }
 }
