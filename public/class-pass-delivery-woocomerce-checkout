@@ -87,5 +87,13 @@ if (!class_exists('Pass_Delivery_Woocomerce_Checkout')) {
 
             );
         }
+
+        function custom_override_checkout_fields($fields)
+        {
+            $this->add_shipping_fields($fields);
+            $this->add_billing_fields($fields);
+
+            return $fields;
+        }
     }
 }
