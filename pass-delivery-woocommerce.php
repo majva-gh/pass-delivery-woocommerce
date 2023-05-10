@@ -26,6 +26,14 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
     return;
 
 if (!class_exists('Pass_Delivery')) {
+
+    define( 'PASS_PLUGIN_VERSION', '1.0.0' );
+    define( 'PASS_METHOD_ID', 'pass_woocommerce_shipping');
+    define( 'PASS_METHOD_TITLE', __('Pass WooCommerce Shipping'));
+    define( 'PASS_METHOD_DESC', __('Pass.qa delivery plugin for WooCommerce shipping', 'pass-delivery-woocommerce'));
+    define( 'PASS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+    define( 'PASS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+
     require_once __DIR__ . '/admin/class-pass-delivery-woocommerce-admin-panel.php';
 
     class Pass_Delivery
@@ -38,10 +46,11 @@ if (!class_exists('Pass_Delivery')) {
          */
         public function __construct()
         {
-            $this->id = 'pass_woocommerce_shipping';
-            $this->title = __('Pass WooCommerce Shipping');
-            $this->method_description = __('Pass.qa delivery plugin for WooCommerce shipping');
+            $this->id = PASS_METHOD_ID;
+            $this->method_title = PASS_METHOD_TITLE;
+            $this->method_description = PASS_METHOD_DESC;
             $this->enabled = "yes";
+
             new Pass_Delivery_Woocommerce_Admin_Panel();
         }
     }
