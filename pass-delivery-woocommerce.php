@@ -19,18 +19,29 @@
  * License URI:           http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-if ( !defined( 'ABSPATH' ) )
+if (!defined('ABSPATH'))
     exit;
 
-if ( !in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) )
+if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))))
     return;
 
-if(!class_exists('Pass_Delivery')) {
+if (!class_exists('Pass_Delivery')) {
     require_once __DIR__ . '/admin/class-pass-delivery-woocommerce-admin-panel.php';
 
-    class Pass_Delivery {
+    class Pass_Delivery
+    {
+        /**
+         * Constructor for your shipping class
+         *
+         * @access public
+         * @return void
+         */
         public function __construct()
         {
+            $this->id = 'pass_woocommerce_shipping';
+            $this->title = __('Pass WooCommerce Shipping');
+            $this->method_description = __('Pass.qa delivery plugin for WooCommerce shipping');
+            $this->enabled = "yes";
             new Pass_Delivery_Woocommerce_Admin_Panel();
         }
     }
