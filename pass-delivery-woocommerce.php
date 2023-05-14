@@ -29,6 +29,7 @@ if (!class_exists('Pass_Delivery')) {
 
     define( 'PASS_PLUGIN_VERSION', '1.0.0' );
     define( 'PASS_METHOD_ID', 'pass_woocommerce_shipping');
+    define( 'PASS_TRANSLATE_ID', 'pass-woocommerce-shipping');
     define( 'PASS_METHOD_TITLE', __('Pass WooCommerce Shipping'));
     define( 'PASS_METHOD_DESC', __('Pass.qa delivery plugin for WooCommerce shipping', 'pass-delivery-woocommerce'));
     define( 'PASS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
