@@ -27,7 +27,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
         //<editor-fold desc="=============================================== Settings submenu ===============================================">
         private function add_settings_submenu()
         {
-            add_submenu_page('passqa', __('Settings', 'pass-woocommerce-shipping'), __('Settings', 'pass-woocommerce-shipping'), 'manage_options', 'pass-shipping-settings', function () {
+            add_submenu_page('passqa', __('Settings', PASS_TRANSLATE_ID), __('Settings', PASS_TRANSLATE_ID), 'manage_options', 'pass-shipping-settings', function () {
                 wp_redirect($this->get_settings_url(), 301);
                 exit;
             });
