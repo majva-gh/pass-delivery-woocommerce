@@ -20,42 +20,16 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
 
             add_menu_page($mainTitle, $mainTitle, 'manage_options', 'passqa', null, plugins_url('pass-delivery-woocommerce/admin/assets/img/icon.png'), '55.6');
 
-            $this->add_settings_submenu();
+            $this->manage_settings();
             $this->add_support_submenu();
 
         }
 
-        //<editor-fold desc="=============================================== Settings submenu ===============================================">
-        private function add_settings_submenu()
+        private function manage_settings()
         {
-            add_submenu_page('passqa', __('Settings', PASS_TRANSLATE_ID), __('Settings', PASS_TRANSLATE_ID), 'manage_options', 'pass-shipping-settings', function () {
-                wp_redirect($this->get_settings_url(), 301);
-                exit;
-            });
+            require_once __DIR__ . '/class-pass-delivery-woocommerce-menuitem-setting.php';
+            new Pass_Delivery_Woocommerce_Menuitem_Setting();
         }
-
-        /**
-         * @return string
-         * @since  1.0.0
-         */
-        private function get_settings_url(): string
-        {
-
-            return admin_url('admin.php?page=' . $this->get_wc_settings_url() . '&tab=shipping&section=' . PASS_METHOD_ID);
-
-        }
-
-        /**
-         * @return boolean
-         * @since  1.0.0
-         */
-        private function get_wc_settings_url(): bool|string
-        {
-
-            return version_compare(WC()->version, '2.1', '>=') ? 'wc-settings' : 'woocommerce_settings';
-
-        }
-        //</editor-fold>
 
         //<editor-fold desc="=============================================== Settings submenu ===============================================">
         private function add_support_submenu()
