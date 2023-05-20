@@ -7,7 +7,7 @@
  * @wordpress-plugin
  * Plugin Name:     Pass WooCommerce Shipping
  * Plugin URI:      https://pass.qa/developers/
- * Description:     Pass delivery plugin for wooCommerce shipping
+ * Description:     Pass delivery plugin for WooCommerce shipping
  * Version:         1.0.0
  * Author:          Mostafa Sharami, Majid Vahidkhoo
  * Author URI:      https://pass.qa/
@@ -30,8 +30,11 @@ if (!class_exists('Pass_Delivery')) {
     define( 'PASS_PLUGIN_VERSION', '1.0.0' );
     define( 'PASS_METHOD_ID', 'pass_woocommerce_shipping');
     define( 'PASS_TRANSLATE_ID', 'pass-woocommerce-shipping');
-    define( 'PASS_METHOD_TITLE', __('Pass WooCommerce Shipping'));
-    define( 'PASS_METHOD_DESC', __('Pass.qa delivery plugin for WooCommerce shipping', 'pass-delivery-woocommerce'));
+    define( 'PASS_INTEGRATE_URL', 'https://www.pass.qa/integrations/' );
+    define( 'PASS_DOCUMENT_URL', 'https://passdelivery.readme.io/reference/get-api-token' );
+    define( 'PASS_METHOD_TITLE', __('Pass WooCommerce Shipping', PASS_TRANSLATE_ID));
+    define( 'PASS_METHOD_DESC', sprintf( __('<a href="%s" target="_blank">Pass.qa</a> delivery plugin for WooCommerce shipping', PASS_TRANSLATE_ID), PASS_INTEGRATE_URL));
+    define( 'PASS_GET_KEY_HELP', sprintf( __('Go to the <a href="%s" target="_blank">Pass.qa API document</a> for help to how to can get an api key and use', PASS_TRANSLATE_ID), PASS_DOCUMENT_URL));
     define( 'PASS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
     define( 'PASS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
