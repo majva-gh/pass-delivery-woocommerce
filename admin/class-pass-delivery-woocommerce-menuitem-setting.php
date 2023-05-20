@@ -94,16 +94,25 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
                 )
             );
 
-            $settings_extend = array();
-            if(false) {
-                $settings_extend = array(
-                    array(
-                        'name'     => __( 'Enable/Disable', PASS_TRANSLATE_ID ),
-                    )
-                );
-            }
+            $settings_extend = false ? array(
+                array(
+                    //'name'     => __( 'Enable/Disable', PASS_TRANSLATE_ID ),
+                    'name'     => __( 'Enable/Disable2', PASS_TRANSLATE_ID ),
+                    'desc_tip' => __( 'Show or hide pass delivery shipping method', PASS_TRANSLATE_ID ),
+                    'id'       => $this->id . '_enable_disable2',
+                    'type'     => 'checkbox',
+                    'css'      => 'min-width:300px;',
+                    'desc'     => __( 'Enable Pass Delivery shipping', PASS_TRANSLATE_ID ),
+                )
+            ) : array();
 
-            return array_merge($settings_base, $settings_extend);
+            $settings_slider = array_merge($settings_base, $settings_extend);
+            $settings_slider[] = array(
+                'type' => 'sectionend',
+                'id' => $this->id . '_sectionend'
+            );
+
+            return $settings_slider;
         }
         //</editor-fold>
     }
