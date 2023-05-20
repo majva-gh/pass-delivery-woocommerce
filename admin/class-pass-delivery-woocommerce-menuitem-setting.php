@@ -51,11 +51,59 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
         //<editor-fold desc="=============================================== Settings section ===============================================">
         private function add_section_to_woo_setting_shipping_tab() {
             add_filter( 'woocommerce_get_sections_shipping', array($this, 'add_section_to_shipping_tab') );
+            add_filter( 'woocommerce_get_settings_shipping', array($this, 'add_section_fields'), 10, 2 );
         }
 
         public function add_section_to_shipping_tab( $sections ) {
-            $sections[$this->id] = __( 'Pass Delivery', 'text-domain' );
+            $sections[$this->id] = __( 'Pass Delivery', PASS_TRANSLATE_ID );
             return $sections;
+        }
+
+        function add_section_fields( $settings, $current_section ) {
+            /**
+             * Check the current section is what we want
+             **/
+            if ( $current_section !== $this->id ) {
+                return $settings;
+            }
+
+            $settings_base = array(
+                array(
+                    'name' => $this->method_title,
+                    'type' => 'title',
+                    'desc' => $this->method_description,
+                    'id'   => $this->id . '_title'
+                ),
+                array(
+                    'name'     => __( 'Enable/Disable', PASS_TRANSLATE_ID ),
+                    'desc_tip' => __( 'Show or hide pass delivery shipping method', PASS_TRANSLATE_ID ),
+                    'id'       => $this->id . '_enable_disable',
+                    'type'     => 'checkbox',
+                    'css'      => 'min-width:300px;',
+                    'desc'     => __( 'Enable Pass Delivery shipping', PASS_TRANSLATE_ID ),
+                ),
+                array(
+                    'title'       => __( 'API Key', PASS_TRANSLATE_ID ),
+                    'type'        => 'text',
+                    'default'     => '',
+                    'id'       => $this->id . '_api_key',
+                    'desc' => PASS_GET_KEY_HELP,
+                    'custom_attributes' => array(
+                        'required' => 'required'
+                    )
+                )
+            );
+
+            $settings_extend = array();
+            if(false) {
+                $settings_extend = array(
+                    array(
+                        'name'     => __( 'Enable/Disable', PASS_TRANSLATE_ID ),
+                    )
+                );
+            }
+
+            return array_merge($settings_base, $settings_extend);
         }
         //</editor-fold>
     }
