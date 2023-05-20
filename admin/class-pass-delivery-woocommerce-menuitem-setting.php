@@ -9,8 +9,10 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
             $this->method_description = PASS_METHOD_DESC;
 
             $this->add_settings_to_admin_menu_item();
+            add_filter( 'woocommerce_get_sections_shipping', array($this, 'add_section_to_woo_setting_shipping_tab') );
         }
 
+        //<editor-fold desc="=============================================== Settings submenu ===============================================">
         /**
          * @since 1.0.0
          */
@@ -44,5 +46,13 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
             return version_compare(WC()->version, '2.1', '>=') ? 'wc-settings' : 'woocommerce_settings';
 
         }
+        //</editor-fold>
+
+        //<editor-fold desc="=============================================== Settings section ===============================================">
+        public function add_section_to_woo_setting_shipping_tab( $sections ) {
+            $sections[$this->id] = __( 'Pass Delivery', 'text-domain' );
+            return $sections;
+        }
+        //</editor-fold>
     }
 }
