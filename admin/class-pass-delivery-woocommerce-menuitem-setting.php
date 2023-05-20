@@ -49,8 +49,8 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
         //</editor-fold>
 
         //<editor-fold desc="=============================================== Settings section ===============================================">
-        public function add_section_to_woo_setting_shipping_tab( $sections ) {
-            add_filter( 'woocommerce_get_sections_shipping', array($this, 'add_section_to_woo_setting_shipping_tab') );
+        private function add_section_to_woo_setting_shipping_tab() {
+            add_filter( 'woocommerce_get_sections_shipping', array($this, 'add_section_to_shipping_tab') );
         }
 
         public function add_section_to_shipping_tab( $sections ) {
