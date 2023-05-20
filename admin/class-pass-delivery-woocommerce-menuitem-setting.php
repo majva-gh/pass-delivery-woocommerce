@@ -9,7 +9,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
             $this->method_description = PASS_METHOD_DESC;
 
             $this->add_settings_to_admin_menu_item();
-            add_filter( 'woocommerce_get_sections_shipping', array($this, 'add_section_to_woo_setting_shipping_tab') );
+            $this->add_section_to_woo_setting_shipping_tab();
         }
 
         //<editor-fold desc="=============================================== Settings submenu ===============================================">
@@ -50,6 +50,10 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
 
         //<editor-fold desc="=============================================== Settings section ===============================================">
         public function add_section_to_woo_setting_shipping_tab( $sections ) {
+            add_filter( 'woocommerce_get_sections_shipping', array($this, 'add_section_to_woo_setting_shipping_tab') );
+        }
+
+        public function add_section_to_shipping_tab( $sections ) {
             $sections[$this->id] = __( 'Pass Delivery', 'text-domain' );
             return $sections;
         }
