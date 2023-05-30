@@ -9,10 +9,8 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
             $this->method_description = PASS_METHOD_DESC;
 
             $this->add_settings_to_admin_menu_item();
-            $this->add_section_to_woo_setting_shipping_tab();
         }
 
-        //<editor-fold desc="=============================================== Settings submenu ===============================================">
         /**
          * @since 1.0.0
          */
@@ -46,74 +44,5 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
             return version_compare(WC()->version, '2.1', '>=') ? 'wc-settings' : 'woocommerce_settings';
 
         }
-        //</editor-fold>
-
-        //<editor-fold desc="=============================================== Settings section ===============================================">
-        private function add_section_to_woo_setting_shipping_tab() {
-            add_filter( 'woocommerce_get_sections_shipping', array($this, 'add_section_to_shipping_tab') );
-            add_filter( 'woocommerce_get_settings_shipping', array($this, 'add_section_fields'), 10, 2 );
-        }
-
-        public function add_section_to_shipping_tab( $sections ) {
-            $sections[$this->id] = __( 'Pass Delivery', PASS_TRANSLATE_ID );
-            return $sections;
-        }
-
-        function add_section_fields( $settings, $current_section ) {
-            /**
-             * Check the current section is what we want
-             **/
-            if ( $current_section !== $this->id ) {
-                return $settings;
-            }
-
-            $settings_base = array(
-                array(
-                    'name' => $this->method_title,
-                    'type' => 'title',
-                    'desc' => $this->method_description,
-                    'id'   => $this->id . '_title'
-                ),
-                array(
-                    'name'     => __( 'Enable/Disable', PASS_TRANSLATE_ID ),
-                    'desc_tip' => __( 'Show or hide pass delivery shipping method', PASS_TRANSLATE_ID ),
-                    'id'       => $this->id . '_enable_disable',
-                    'type'     => 'checkbox',
-                    'css'      => 'min-width:300px;',
-                    'desc'     => __( 'Enable Pass Delivery shipping', PASS_TRANSLATE_ID ),
-                ),
-                array(
-                    'title'       => __( 'API Key', PASS_TRANSLATE_ID ),
-                    'type'        => 'text',
-                    'default'     => '',
-                    'id'       => $this->id . '_api_key',
-                    'desc' => PASS_GET_KEY_HELP,
-                    'custom_attributes' => array(
-                        'required' => 'required'
-                    )
-                )
-            );
-
-            $settings_extend = false ? array(
-                array(
-                    //'name'     => __( 'Enable/Disable', PASS_TRANSLATE_ID ),
-                    'name'     => __( 'Enable/Disable2', PASS_TRANSLATE_ID ),
-                    'desc_tip' => __( 'Show or hide pass delivery shipping method', PASS_TRANSLATE_ID ),
-                    'id'       => $this->id . '_enable_disable2',
-                    'type'     => 'checkbox',
-                    'css'      => 'min-width:300px;',
-                    'desc'     => __( 'Enable Pass Delivery shipping', PASS_TRANSLATE_ID ),
-                )
-            ) : array();
-
-            $settings_slider = array_merge($settings_base, $settings_extend);
-            $settings_slider[] = array(
-                'type' => 'sectionend',
-                'id' => $this->id . '_sectionend'
-            );
-
-            return $settings_slider;
-        }
-        //</editor-fold>
     }
 }
