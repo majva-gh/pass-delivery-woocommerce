@@ -24,6 +24,8 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
         private function init() {
             $this->init_settings();
             $this->init_form_fields();
+
+            add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
         }
 
         function init_form_fields() {
@@ -107,6 +109,24 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             $form_fields = array_merge($settings_base, $settings_extend);
 
             $this->form_fields = $form_fields;
+        }
+
+        public function get_post_data(): array
+        {
+            $values = array();
+            $fields = $this->get_form_fields();
+
+            foreach ( $fields as $key => $field ) {
+                if ( 'title' != $this->get_field_type( $field ) ) {
+                    try {
+                        $values[ $key ] = $this->get_field_value( $key, $field, $_POST );
+                    } catch ( Exception $e ) {
+                        $this->add_error( $e->getMessage() );
+                    }
+                }
+            }
+
+            return $values;
         }
     }
 }
