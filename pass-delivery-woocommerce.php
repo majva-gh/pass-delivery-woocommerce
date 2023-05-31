@@ -61,4 +61,16 @@ if (!class_exists('Pass_Delivery')) {
     }
 
     new Pass_Delivery();
+
+    // -------------------------------------------------------------------------------- Define Shipping Method
+    add_action( 'woocommerce_shipping_init', 'pass_delivery_shipping_method_init' );
+    function pass_delivery_shipping_method_init() {
+        require_once PASS_PLUGIN_DIR . '/admin/class-pass-delivery-woocommerce-shipping-method.php';
+    }
+
+    add_filter( 'woocommerce_shipping_methods', 'add_pass_delivery_shipping_method' );
+    function add_pass_delivery_shipping_method( $methods ) {
+        $methods[] = 'Pass_Delivery_Woocommerce_Shipping_Method';
+        return $methods;
+    }
 }
