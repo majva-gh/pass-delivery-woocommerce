@@ -128,5 +128,17 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
 
             return $values;
         }
+
+        private function is_new_location($last_values, $new_values): bool
+        {
+            $list = ['store_zone_number', 'store_street_number', 'store_building_number'];
+            foreach ($list as $key) {
+                if ($last_values[$key] ?? '' != $new_values[$key] ?? '') {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
