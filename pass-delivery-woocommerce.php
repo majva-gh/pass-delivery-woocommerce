@@ -27,6 +27,7 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 
 if (!class_exists('Pass_Delivery')) {
 
+    define( 'PASS_PLUGIN_DIR', __DIR__ );
     define( 'PASS_PLUGIN_VERSION', '1.0.0' );
     define( 'PASS_METHOD_ID', 'pass_woocommerce_shipping');
     define( 'PASS_TRANSLATE_ID', 'pass-woocommerce-shipping');
