@@ -40,6 +40,7 @@ if (!class_exists('Pass_Delivery')) {
     define( 'PASS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
     require_once __DIR__ . '/admin/class-pass-delivery-woocommerce-admin-panel.php';
+    require_once __DIR__ . '/public/class-pass-delivery-woocomerce-checkout.php';
 
     class Pass_Delivery
     {
@@ -57,6 +58,7 @@ if (!class_exists('Pass_Delivery')) {
             $this->enabled = "yes";
 
             new Pass_Delivery_Woocommerce_Admin_Panel();
+            new Pass_Delivery_Woocommerce_Checkout();
         }
     }
 
