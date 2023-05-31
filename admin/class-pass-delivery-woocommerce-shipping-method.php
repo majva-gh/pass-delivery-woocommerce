@@ -111,6 +111,50 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             $this->form_fields = $form_fields;
         }
 
+        /**
+         * Processes and saves global shipping method options in the admin area.
+         *
+         * This method is usually attached to woocommerce_update_options_x hooks.
+         *
+         * @since 2.6.0
+         * @return bool was anything saved?
+         */
+        public function process_admin_options()
+        {
+            $this->init_settings();
+            $data = $this->get_post_data();
+
+            if($this->is_new_location($this->settings, $data)){
+                require_once(PASS_PLUGIN_DIR . '/common/class-blue-plate-library.php');
+                $blue_plate_library = new Blue_Plate_Library();
+                $address = $blue_plate_library->get_address(
+                    $data['store_zone_number'],
+                    $data['store_street_number'],
+                    $data['store_building_number']
+                );
+
+                if(empty($address)){
+                    return false;
+                }
+
+                $data = array_merge($data, $address);
+            }
+
+            $update = update_option(
+                $this->get_option_key(),
+                apply_filters(
+                    'woocommerce_settings_api_sanitized_fields_' . $this->id,
+                    array_merge($this->settings, $data) ),
+                'yes'
+            );
+
+            if($update) {
+                echo '<script>window.location = window.location;</script>';
+            }
+
+            return $update;
+        }
+
         public function get_post_data(): array
         {
             $values = array();
