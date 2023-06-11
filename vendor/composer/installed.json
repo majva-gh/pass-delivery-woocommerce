@@ -1,0 +1,73 @@
+{
+    "packages": [
+        {
+            "name": "pass-qa/delivery",
+            "version": "1.1.0",
+            "version_normalized": "1.1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pass-qa/delivery.git",
+                "reference": "efbeb18e4f26ffd1ba625319cea8b1bf0e299609"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pass-qa/delivery/zipball/efbeb18e4f26ffd1ba625319cea8b1bf0e299609",
+                "reference": "efbeb18e4f26ffd1ba625319cea8b1bf0e299609",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0"
+            },
+            "time": "2023-03-04T11:51:18+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "PassQa\\Delivery\\Providers\\PassDeliveryApiServiceProvider"
+                    ],
+                    "aliases": {
+                        "PassOrder": "PassQa\\Delivery\\Facades\\PassOrder"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PassQa\\Delivery\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pass - Instant Delivery Platform",
+                    "email": "techsuport@gmail.com"
+                },
+                {
+                    "name": "Mostafa sharami",
+                    "email": "mostafa.sharami@gmail.com",
+                    "role": "Senior Software Developer"
+                },
+                {
+                    "name": "Majva",
+                    "email": "m.vahidkhoo@gmail.com",
+                    "role": "Senior Software Developer"
+                }
+            ],
+            "description": "Pass delivery service API library",
+            "support": {
+                "issues": "https://github.com/pass-qa/delivery/issues",
+                "source": "https://github.com/pass-qa/delivery/tree/1.1.0"
+            },
+            "install-path": "../pass-qa/delivery"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}
