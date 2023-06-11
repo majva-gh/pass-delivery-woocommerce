@@ -26,7 +26,6 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             $this->init();
         }
 
-
         private function init() {
             $this->init_settings();
             $this->init_form_fields();
@@ -124,6 +123,44 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
          */
         public function get_instance_form_fields() {
             return parent::get_instance_form_fields();
+        }
+
+        /**
+         * calculate_shipping function.
+         *
+         * @access public
+         * @param array $package
+         * @return void
+         */
+        public function calculate_shipping( $package = array() ) {
+
+            $this->init_settings();
+            $priceData = [
+                "pickup" =>[
+                    "lat" => $this->settings['lat'],
+                    "long" => $this->settings['lng']
+                ],
+                "dropoffs" => [
+                    [
+                        "lat" =>"25.254461",
+                        "long" => "51.519059"
+                    ]
+                ]
+            ];
+            require_once(PASS_PLUGIN_DIR . '/common/class-pass-order-library.php');
+            $order = new Pass_Order_Library($this->settings['api_key']);
+            $response = $order->Price($priceData);
+
+            $rate = array(
+                'id' => $this->id . '_' . $this->instance_id,
+                'label' => $this->title,
+                'cost' => $response['price'],
+                'cost_symbol' => $response['symbol'],
+                'calc_tax' => 'per_item'
+            );
+
+            // Register the rate
+            $this->add_rate( $rate );
         }
 
         /**
