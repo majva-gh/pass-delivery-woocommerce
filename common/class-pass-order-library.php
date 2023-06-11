@@ -21,5 +21,33 @@ if (!class_exists('Pass_Order_Library')) {
                 ]
             ];
         }
+
+        private function send_request($data, $attachUrl = '', $method = 'POST')
+        {
+            $curl = curl_init();
+
+            $this->curlOptions[CURLOPT_URL] = "https://api.pass.qa/business/v1/orders{$attachUrl}";
+            $this->curlOptions[CURLOPT_CUSTOMREQUEST] = $method;
+            $this->curlOptions[CURLOPT_POSTFIELDS] = json_encode($data);
+
+            curl_setopt_array($curl, $this->curlOptions);
+
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+            curl_close($curl);
+
+
+            if ($err) {
+                return [];
+            }
+
+            $response = json_decode($response, true);
+            if($response['status'] !== 'success') {
+                return [];
+            }
+
+            return $response['data'];
+        }
     }
 }
