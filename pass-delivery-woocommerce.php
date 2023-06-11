@@ -72,7 +72,7 @@ if (!class_exists('Pass_Delivery')) {
 
     add_filter( 'woocommerce_shipping_methods', 'add_pass_delivery_shipping_method' );
     function add_pass_delivery_shipping_method( $methods ) {
-        $methods[] = 'Pass_Delivery_Woocommerce_Shipping_Method';
+        $methods[PASS_METHOD_ID] = 'Pass_Delivery_Woocommerce_Shipping_Method';
         return $methods;
     }
 }
