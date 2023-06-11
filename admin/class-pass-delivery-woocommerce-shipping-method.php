@@ -118,6 +118,15 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
         }
 
         /**
+         * Get setting form fields for instances of this shipping method within zones.
+         *
+         * @return array
+         */
+        public function get_instance_form_fields() {
+            return parent::get_instance_form_fields();
+        }
+
+        /**
          * Processes and saves global shipping method options in the admin area.
          *
          * This method is usually attached to woocommerce_update_options_x hooks.
