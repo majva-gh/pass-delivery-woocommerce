@@ -17,11 +17,11 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             $this->enabled            = "yes";
             $this->title              = PASS_METHOD_TITLE;
 
-            $this->supports = array_merge($this->supports, array(
+            /*$this->supports = array_merge($this->supports, array(
                 'shipping-zones',
                 'instance-settings',
                 'instance-settings-modal',
-            ));
+            ));*/
 
             $this->init();
         }
@@ -149,7 +149,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             ];
             require_once(PASS_PLUGIN_DIR . '/common/class-pass-order-library.php');
             $order = new Pass_Order_Library($this->settings['api_key']);
-            $response = $order->Price($priceData);
+            $response = $order->price($priceData);
 
             $rate = array(
                 'id' => $this->id . '_' . $this->instance_id,
