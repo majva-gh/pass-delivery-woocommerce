@@ -17,11 +17,11 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             $this->enabled            = "yes";
             $this->title              = PASS_METHOD_TITLE;
 
-            $this->supports = array_merge($this->supports, array(
+            /*$this->supports = array_merge($this->supports, array(
                 'shipping-zones',
                 'instance-settings',
                 'instance-settings-modal',
-            ));
+            ));*/
 
             $this->init();
         }
