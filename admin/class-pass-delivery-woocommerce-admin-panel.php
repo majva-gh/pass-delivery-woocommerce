@@ -38,6 +38,20 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
         }
 
         /**
+         * @since  1.0.0
+         * @param  array $links
+         * @return array
+         */
+        public function action_links( $links ) {
+
+            $plugin_links[] = '<a href="' . $this->get_settings_url() . '">' . __('Settings', PASS_TRANSLATE_ID) . '</a>';
+            $plugin_links[] = '<a href="' . $this->get_support_url() . '">' . __('Support', PASS_TRANSLATE_ID) . '</a>';
+
+            return array_merge( $plugin_links, $links );
+
+        }
+
+        /**
          * @return string
          * @since  1.0.0
          */
