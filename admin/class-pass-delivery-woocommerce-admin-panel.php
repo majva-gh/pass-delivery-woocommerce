@@ -9,6 +9,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
             $this->method_description = PASS_METHOD_DESC;
 
             add_action('admin_menu', array($this, 'admin_menu_items'));
+            add_filter('plugin_action_links_' . PASS_PLUGIN_BASENAME, array($this, 'action_links'));
         }
 
         /**
