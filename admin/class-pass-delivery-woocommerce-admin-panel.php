@@ -54,5 +54,10 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
         {
             return version_compare(WC()->version, '2.1', '>=') ? 'wc-settings' : 'woocommerce_settings';
         }
+
+        public function get_support_url()
+        {
+            return admin_url( 'admin.php?page=pass-support' );
+        }
     }
 }
