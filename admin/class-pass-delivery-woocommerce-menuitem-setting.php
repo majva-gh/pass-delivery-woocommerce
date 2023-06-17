@@ -23,16 +23,5 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
             });
 
         }
-
-        /**
-         * @return boolean
-         * @since  1.0.0
-         */
-        private function get_wc_settings_url(): bool|string
-        {
-
-            return version_compare(WC()->version, '2.1', '>=') ? 'wc-settings' : 'woocommerce_settings';
-
-        }
     }
 }
