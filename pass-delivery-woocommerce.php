@@ -9,8 +9,10 @@
  * Plugin URI:      https://pass.qa/developers/
  * Description:     Pass delivery plugin for WooCommerce shipping
  * Version:         1.0.0
- * Author:          Mostafa Sharami, Majid Vahidkhoo
- * Author URI:      https://pass.qa/
+ * Author:          Peyk
+ * Author:          Mostafa Sharami
+ * Author:          Majid Vahidkhoo
+ * Author URI:      https://peyk.uk/
  * Author URI:      http://MostafaSharami.com/
  * Author URI:      http://Majva.com/
  *
