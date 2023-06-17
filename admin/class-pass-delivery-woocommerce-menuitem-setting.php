@@ -25,17 +25,6 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Setting')) {
         }
 
         /**
-         * @return string
-         * @since  1.0.0
-         */
-        private function get_settings_url(): string
-        {
-
-            return admin_url('admin.php?page=' . $this->get_wc_settings_url() . '&tab=shipping&section=' . PASS_METHOD_ID);
-
-        }
-
-        /**
          * @return boolean
          * @since  1.0.0
          */
