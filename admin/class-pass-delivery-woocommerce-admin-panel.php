@@ -21,9 +21,16 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
 
             add_menu_page($mainTitle, $mainTitle, 'manage_options', 'passqa', null, plugins_url('pass-delivery-woocommerce/admin/assets/img/icon.png'), '55.6');
 
+            $this->manage_orders();
             $this->manage_settings();
             $this->manage_support();
 
+        }
+
+        private function manage_orders()
+        {
+            require_once __DIR__ . '/class-pass-delivery-woocommerce-menuitem-orders.php';
+            new Pass_Delivery_Woocommerce_Menuitem_Orders();
         }
 
         private function manage_settings()
