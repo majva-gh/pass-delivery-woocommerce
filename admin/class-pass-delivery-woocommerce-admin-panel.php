@@ -45,8 +45,9 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
          */
         public function action_links( $links ) {
 
-            $plugin_links[] = '<a href="' . $this->get_settings_url() . '">' . __('Settings', PASS_TRANSLATE_ID) . '</a>';
-            $plugin_links[] = '<a href="' . $this->get_support_url() . '">' . __('Support', PASS_TRANSLATE_ID) . '</a>';
+            GLOBAL $pdHelper;
+            $plugin_links[] = '<a href="' . $pdHelper->get_settings_url() . '">' . __('Settings', PASS_TRANSLATE_ID) . '</a>';
+            $plugin_links[] = '<a href="' . $pdHelper->get_support_url() . '">' . __('Support', PASS_TRANSLATE_ID) . '</a>';
             $plugin_links[] = '<a href="https://passdelivery.readme.io/reference/getting-started">Documentation</a>';
 
             return array_merge( $plugin_links, $links );
