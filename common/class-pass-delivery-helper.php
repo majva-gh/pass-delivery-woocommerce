@@ -3,6 +3,13 @@
 if (!class_exists('Blue_Pass_Delivery_Helper')) {
     class Blue_Pass_Delivery_Helper
     {
+        public function __construct()
+        {
+            $this->id = PASS_METHOD_ID;
+            $this->method_title = PASS_METHOD_TITLE;
+            $this->method_description = PASS_METHOD_DESC;
+        }
+
         public function get_settings_url(): string
         {
             return admin_url('admin.php?page=' . $this->get_wc_settings_url() . '&tab=shipping&section=' . PASS_METHOD_ID);
@@ -16,6 +23,19 @@ if (!class_exists('Blue_Pass_Delivery_Helper')) {
         public function get_support_url()
         {
             return admin_url( 'admin.php?page=pass-support' );
+        }
+
+        public function get_setting_key($key = null, $default = '') {
+            $value = $default;
+            $setting = get_option('woocommerce_pass_woocommerce_shipping_settings');
+            if($setting) {
+                if($key) {
+                    $value = $setting[$key] ? $setting[$key] : $default;
+                } else {
+                    $value = $setting ? $setting : [];
+                }
+            }
+            return $value;
         }
     }
 
