@@ -43,6 +43,7 @@ if (!class_exists('Pass_Delivery')) {
 
     require_once __DIR__ . '/admin/class-pass-delivery-woocommerce-admin-panel.php';
     require_once __DIR__ . '/public/class-pass-delivery-woocomerce-checkout.php';
+    require_once __DIR__ . '/common/class-pass-delivery-helper.php';
 
     class Pass_Delivery
     {
