@@ -60,8 +60,7 @@ if (!class_exists('Pass_Delivery')) {
             $this->method_description = PASS_METHOD_DESC;
             $this->enabled = "yes";
 
-            GLOBAL $passWooShippingAdmin;
-            $passWooShippingAdmin = new Pass_Delivery_Woocommerce_Admin_Panel();
+            new Pass_Delivery_Woocommerce_Admin_Panel();
             new Pass_Delivery_Woocommerce_Checkout();
         }
     }
