@@ -62,13 +62,5 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
             return admin_url('admin.php?page=' . $this->get_wc_settings_url() . '&tab=shipping&section=' . PASS_METHOD_ID);
         }
 
-        /**
-         * @return boolean
-         * @since  1.0.0
-         */
-        private function get_wc_settings_url(): bool|string
-        {
-            return version_compare(WC()->version, '2.1', '>=') ? 'wc-settings' : 'woocommerce_settings';
-        }
     }
 }
