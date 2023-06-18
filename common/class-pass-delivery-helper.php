@@ -25,6 +25,11 @@ if (!class_exists('Blue_Pass_Delivery_Helper')) {
             return admin_url( 'admin.php?page=pass-support' );
         }
 
+        public function validate_user() {
+            $key = $this->get_setting_key('api_key');
+            return !empty($key);
+        }
+
         public function get_setting_key($key = null, $default = '') {
             $value = $default;
             $setting = get_option('woocommerce_pass_woocommerce_shipping_settings');
