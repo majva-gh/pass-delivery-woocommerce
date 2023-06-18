@@ -42,6 +42,10 @@ if (!class_exists('Blue_Pass_Delivery_Helper')) {
             }
             return $value;
         }
+
+        public function error_for_not_found_user() {
+            return '<div class="error notice awcshm-credit-widget-wrapper"><p>' . sprintf( __( 'User data not found. You have to enter a valid API key in <a href="%s">settings page</a> in order to access this page.', 'alopeyk-woocommerce-shipping' ), $this->get_settings_url() ) . '</p></div>';
+        }
     }
 
     $pdHelper = new Blue_Pass_Delivery_Helper();
