@@ -24,16 +24,24 @@ if (!class_exists('Pass_Order_Library')) {
 
         public function price($priceData)
         {
-            return $this->send_request($priceData, '/price/calc');
+            return $this->send_request($priceData, '/price/calc', 'POST');
         }
 
-        private function send_request($data, $attachUrl = '', $method = 'POST')
+        public function list()
+        {
+            return $this->send_request();
+        }
+
+        private function send_request($data = [], $attachUrl = '', $method = 'GET')
         {
             $curl = curl_init();
 
             $this->curlOptions[CURLOPT_URL] = "https://api.pass.qa/business/v1/orders{$attachUrl}";
             $this->curlOptions[CURLOPT_CUSTOMREQUEST] = $method;
-            $this->curlOptions[CURLOPT_POSTFIELDS] = json_encode($data);
+
+            if(!empty($data)) {
+                $this->curlOptions[CURLOPT_POSTFIELDS] = json_encode($data);
+            }
 
             curl_setopt_array($curl, $this->curlOptions);
 
