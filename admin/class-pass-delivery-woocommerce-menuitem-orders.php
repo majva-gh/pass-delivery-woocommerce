@@ -47,6 +47,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Orders')) {
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Order id</th>
                                             <th>Receiver name</th>
                                             <th>Receiver phone</th>
                                             <th>Receiver address</th>
@@ -63,6 +64,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Orders')) {
                 $date = explode(' ', $row['date']);
                 $msg .= "<tr>
                         <td>{$counter}</td>
+                        <td>{$row['id']}</td>
                         <td>{$row['dropoffs'][0]['name']}</td>
                         <td>
                             <a href='tel:{$row['dropoffs'][0]['phone']}'>{$row['dropoffs'][0]['phone']}</a>
