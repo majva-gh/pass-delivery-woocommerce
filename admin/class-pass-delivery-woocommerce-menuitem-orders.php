@@ -30,24 +30,55 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Orders')) {
             });
         }
 
-        private function load_support_template(): string
+        private function load_support_template($data)
         {
-            return '
-                        <style>
-                            .pass-shipping-wc-card-box{
-                                  margin-top: 30vh;
-                            }
-                            .pass-shipping-wc-card {
-                                  background-color: beige;
-                                  width: fit-content;
-                                  padding: 20px 40px;
-                                  border-radius: 9px;
-                                  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-                            }
-                        </style>
-                        <div class="pass-shipping-wc-card-box">
-                            <div class="pass-shipping-wc-card">
-                                <h3>Hello, this is <a href="https://pass.qa" target="_blank">Pass</a> support</h3>
+            $msg = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+                    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+                
+                    <div class="container">
+                        <div class="row my-5">
+                            <div class="col-12 mb-3">
+                                <h3>Pass delivery orders list</h3>
+                                <hr />
+                            </div>
+                
+                            <div class="col-12">
+                                <table id="myTable" class="display">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Receiver name</th>
+                                            <th>Receiver phone</th>
+                                            <th>Receiver address</th>
+                                            <th>price</th>
+                                            <th>status</th>
+                                            <th>date</th>
+                                            <th>time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+
+            $counter = 1;
+            foreach ($data as $row) {
+                $date = explode(' ', $row['date']);
+                $msg .= "<tr>
+                        <td>{$counter}</td>
+                        <td>{$row['dropoffs'][0]['name']}</td>
+                        <td>
+                            <a href='tel:{$row['dropoffs'][0]['phone']}'>{$row['dropoffs'][0]['phone']}</a>
+                        </td>
+                        <td>{$row['dropoffs'][0]['address']}</td>
+                        <td>{$row['price']}</td>
+                        <td>{$row['order_status']}</td>
+                        <td>{$date[0]}</td>
+                        <td>{$date[1]}</td>
+                    </tr>";
+                $counter++;
+            }
+
+            $msg.= '
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
