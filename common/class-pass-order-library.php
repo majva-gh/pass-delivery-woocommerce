@@ -27,6 +27,11 @@ if (!class_exists('Pass_Order_Library')) {
             return $this->send_request($priceData, '/price/calc', 'POST');
         }
 
+        public function list()
+        {
+            return $this->send_request();
+        }
+
         private function send_request($data = [], $attachUrl = '', $method = 'GET')
         {
             $curl = curl_init();
