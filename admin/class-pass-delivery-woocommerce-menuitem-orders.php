@@ -13,7 +13,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Orders')) {
 
         private function add_support_to_admin_menu_item()
         {
-            add_submenu_page('passqa', __('Orders', PASS_TRANSLATE_ID), __('Orders', PASS_TRANSLATE_ID), 'manage_options', 'pass-orders', function () {
+            add_submenu_page(Pass_Delivery_Woocommerce_Admin_Panel::$parent_slug, __('Orders', PASS_TRANSLATE_ID), __('Orders', PASS_TRANSLATE_ID), 'manage_options', 'pass-orders', function () {
                 GLOBAL $pdHelper;
                 echo $pdHelper->template_or_error_for_not_found_user($this->load_support_template());
             });

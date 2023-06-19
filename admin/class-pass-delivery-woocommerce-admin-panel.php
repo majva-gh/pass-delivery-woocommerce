@@ -2,6 +2,8 @@
 if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
     class Pass_Delivery_Woocommerce_Admin_Panel
     {
+        public static $parent_slug = 'pass-orders';
+
         public function __construct()
         {
             $this->id = PASS_METHOD_ID;
@@ -19,7 +21,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
         {
             $mainTitle = 'Pass delivery';
 
-            add_menu_page($mainTitle, $mainTitle, 'manage_options', 'passqa', null, plugins_url('pass-delivery-woocommerce/admin/assets/img/icon.png'), '55.6');
+            add_menu_page($mainTitle, $mainTitle, 'manage_options', self::$parent_slug, null, plugins_url('pass-delivery-woocommerce/admin/assets/img/icon.png'), '55.6');
 
             $this->manage_orders();
             $this->manage_settings();
