@@ -140,7 +140,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
                 'cost_symbol' => 'undefined',
                 'calc_tax' => 'per_item'
             );
-               
+
             $destination = $this->get_destination_address($_POST);
             if(!empty($destination)) {
 
@@ -169,6 +169,25 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
 
             // Register the rate
             $this->add_rate( $rate );
+        }
+
+        private function fetch_blue_plate($data) {
+            if(isset($data['post_data'])) {
+                $post_data = explode('&', $data['post_data']);
+                $data = [];
+                foreach ($post_data as $key => $value) {
+                    $value = explode('=', $value);
+                    $data[$value[0]] = $value[1];
+                }
+            }
+
+            return isset($data['ship_to_different_address']) ?
+                ['zone_number' => $data['shipping_zone_number'],
+                    'street_number' => $data['shipping_street_number'],
+                    'building_number' => $data['shipping_building_number']] :
+                ['zone_number' => $data['billing_zone_number'],
+                    'street_number' => $data['billing_street_number'],
+                    'building_number' => $data['billing_building_number']];
         }
 
         private function get_destination_address($data)
