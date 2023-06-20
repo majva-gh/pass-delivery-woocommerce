@@ -133,38 +133,39 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
          * @return void
          */
         public function calculate_shipping( $package = array() ) {
-            $destination = $this->get_destination_address($_POST);
-            if(empty($destination)) {
-                return;
-            }
-
-            $this->init_settings();
-            $priceData = [
-                "pickup" =>[
-                    "lat" => $this->settings['lat'],
-                    "long" => $this->settings['lng']
-                ],
-                "dropoffs" => [
-                    [
-                        "lat" => $destination['lat'],
-                        "long" => $destination['lng']
-                    ]
-                ]
-            ];
-            require_once(PASS_PLUGIN_DIR . '/common/class-pass-order-library.php');
-            $order = new Pass_Order_Library($this->settings['api_key']);
-            $response = $order->price($priceData);
-            if(empty($response)) {
-                return;
-            }
-
             $rate = array(
                 'id' => $this->id . '_' . $this->instance_id,
                 'label' => $this->title,
-                'cost' => $response['price'],
-                'cost_symbol' => $response['symbol'],
+                'cost' => 'Not Calculated',
+                'cost_symbol' => 'undefined',
                 'calc_tax' => 'per_item'
             );
+
+            $destination = $this->get_destination_address($_POST);
+            if(!empty($destination)) {
+
+                $this->init_settings();
+                $priceData = [
+                    "pickup" => [
+                        "lat" => $this->settings['lat'],
+                        "long" => $this->settings['lng']
+                    ],
+                    "dropoffs" => [
+                        [
+                            "lat" => $destination['lat'],
+                            "long" => $destination['lng']
+                        ]
+                    ]
+                ];
+                require_once(PASS_PLUGIN_DIR . '/common/class-pass-order-library.php');
+                $order = new Pass_Order_Library($this->settings['api_key']);
+                $response = $order->price($priceData);
+                if (!empty($response)) {
+                    $rate['cost'] = $response['price'];
+                    $rate['cost_symbol'] = $response['symbol'];
+                }
+
+            }
 
             // Register the rate
             $this->add_rate( $rate );
