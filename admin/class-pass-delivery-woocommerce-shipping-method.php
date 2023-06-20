@@ -140,7 +140,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
                 'cost_symbol' => 'undefined',
                 'calc_tax' => 'per_item'
             );
-
+               
             $destination = $this->get_destination_address($_POST);
             if(!empty($destination)) {
 
@@ -162,7 +162,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
                 $response = $order->price($priceData);
                 if (!empty($response)) {
                     $rate['cost'] = $response['price'];
-                    $rate['cost_symbol'] = $response['symbol'];
+                    $rate['cost_symbol'] = $response['symbol'];                
                 }
 
             }
@@ -173,6 +173,12 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
 
         private function get_destination_address($data)
         {
+            $post_data = explode('&',$data['post_data']);
+            $data = [];
+            foreach ($post_data as $key => $value) {
+                $value = explode('=',$value);
+                $data[$value[0]] = $value[1];  
+            }
             $blue_plate = isset($data['ship_to_different_address']) ?
                 ['zone_number' => $data['shipping_zone_number'],
                  'street_number' => $data['shipping_street_number'],
@@ -183,11 +189,13 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
 
             require_once(PASS_PLUGIN_DIR . '/common/class-blue-plate-library.php');
             $blue_plate_library = new Blue_Plate_Library();
+
             return $blue_plate_library->get_coordinates_from_blue_plate(
-                $data['zone_number'],
-                $data['street_number'],
-                $data['building_number']
+                $blue_plate['zone_number'],
+                $blue_plate['street_number'],
+                $blue_plate['building_number']
             );
+          
         }
 
         /**
