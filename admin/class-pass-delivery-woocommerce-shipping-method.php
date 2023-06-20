@@ -154,6 +154,9 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             require_once(PASS_PLUGIN_DIR . '/common/class-pass-order-library.php');
             $order = new Pass_Order_Library($this->settings['api_key']);
             $response = $order->price($priceData);
+            if(empty($response)) {
+                return;
+            }
 
             $rate = array(
                 'id' => $this->id . '_' . $this->instance_id,
