@@ -14,7 +14,7 @@ if (!class_exists('Blue_Plate_Library')) {
             return [];
         }
 
-        private function get_coordinates_from_blue_plate($zone_number, $street_number, $building_number)
+        public function get_coordinates_from_blue_plate($zone_number, $street_number, $building_number)
         {
             $url = "https://services.gisqatar.org.qa/server/rest/services/Vector/QARS_wgs84/MapServer/0/query?";
             $url .= "where=zone_no={$zone_number}+and+street_no={$street_number}and+building_no={$building_number}&f=json";

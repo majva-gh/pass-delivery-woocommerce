@@ -133,34 +133,69 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
          * @return void
          */
         public function calculate_shipping( $package = array() ) {
-
-            $this->init_settings();
-            $priceData = [
-                "pickup" =>[
-                    "lat" => $this->settings['lat'],
-                    "long" => $this->settings['lng']
-                ],
-                "dropoffs" => [
-                    [
-                        "lat" =>"25.254461",
-                        "long" => "51.519059"
-                    ]
-                ]
-            ];
-            require_once(PASS_PLUGIN_DIR . '/common/class-pass-order-library.php');
-            $order = new Pass_Order_Library($this->settings['api_key']);
-            $response = $order->price($priceData);
-
             $rate = array(
                 'id' => $this->id . '_' . $this->instance_id,
                 'label' => $this->title,
-                'cost' => $response['price'],
-                'cost_symbol' => $response['symbol'],
+                'cost' => 'Not Calculated',
+                'cost_symbol' => 'undefined',
                 'calc_tax' => 'per_item'
             );
 
+            $blue_plate = $this->fetch_blue_plate($_POST);
+            require_once(PASS_PLUGIN_DIR . '/common/class-blue-plate-library.php');
+            $blue_plate_library = new Blue_Plate_Library();
+            $destination = $blue_plate_library->get_coordinates_from_blue_plate(
+                $blue_plate['zone_number'],
+                $blue_plate['street_number'],
+                $blue_plate['building_number']
+            );
+
+            if(!empty($destination)) {
+
+                $this->init_settings();
+                $priceData = [
+                    "pickup" => [
+                        "lat" => $this->settings['lat'],
+                        "long" => $this->settings['lng']
+                    ],
+                    "dropoffs" => [
+                        [
+                            "lat" => $destination['lat'],
+                            "long" => $destination['lng']
+                        ]
+                    ]
+                ];
+                require_once(PASS_PLUGIN_DIR . '/common/class-pass-order-library.php');
+                $order = new Pass_Order_Library($this->settings['api_key']);
+                $response = $order->price($priceData);
+                if (!empty($response)) {
+                    $rate['cost'] = $response['price'];
+                    $rate['cost_symbol'] = $response['symbol'];                
+                }
+
+            }
+
             // Register the rate
             $this->add_rate( $rate );
+        }
+
+        private function fetch_blue_plate($data) {
+            if(isset($data['post_data'])) {
+                $post_data = explode('&', $data['post_data']);
+                $data = [];
+                foreach ($post_data as $key => $value) {
+                    $value = explode('=', $value);
+                    $data[$value[0]] = $value[1];
+                }
+            }
+
+            return isset($data['ship_to_different_address']) ?
+                ['zone_number' => $data['shipping_zone_number'],
+                    'street_number' => $data['shipping_street_number'],
+                    'building_number' => $data['shipping_building_number']] :
+                ['zone_number' => $data['billing_zone_number'],
+                    'street_number' => $data['billing_street_number'],
+                    'building_number' => $data['billing_building_number']];
         }
 
         /**
