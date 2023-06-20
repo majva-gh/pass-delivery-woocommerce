@@ -141,7 +141,15 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
                 'calc_tax' => 'per_item'
             );
 
-            $destination = $this->get_destination_address($_POST);
+            $blue_plate = $this->fetch_blue_plate($_POST);
+            require_once(PASS_PLUGIN_DIR . '/common/class-blue-plate-library.php');
+            $blue_plate_library = new Blue_Plate_Library();
+            $destination = $blue_plate_library->get_coordinates_from_blue_plate(
+                $blue_plate['zone_number'],
+                $blue_plate['street_number'],
+                $blue_plate['building_number']
+            );
+
             if(!empty($destination)) {
 
                 $this->init_settings();
