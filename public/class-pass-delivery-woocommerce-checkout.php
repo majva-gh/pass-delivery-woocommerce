@@ -7,7 +7,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Checkout')) {
         {
             add_filter('woocommerce_get_country_locale', array($this, 'optional_postcode_in_qatar'));
 
-            add_filter('woocommerce_checkout_fields', array($this, 'custom_override_checkout_fields'));
+            add_filter('woocommerce_default_address_fields', array($this, 'custom_override_checkout_fields'));
 
             add_action('woocommerce_after_checkout_validation', array($this, 'action_woocommerce_after_checkout_validation'), 10, 2);
 
@@ -20,89 +20,40 @@ if (!class_exists('Pass_Delivery_Woocommerce_Checkout')) {
             return $locales;
         }
 
-        private function add_shipping_fields(&$fields)
-        {
-            //add zone number to shipping section 
-            $fields['shipping']['shipping_zone_number'] = array(
-                'label'     => __('Zone number', 'woocommerce'),
-                'placeholder'   => _x('Zone number', 'placeholder', 'woocommerce'),
-                'required'  => false,
-                'class'     => array('form-row-wide', 'shipping-blueplate'),
-                'clear'     => true,
-                'type'         => 'number',
-                'validate'          => array('required'),
-                'custom_attributes' => array('min' => 1, 'max' => 999)
-            );
-
-            //add street number to shipping section 
-            $fields['shipping']['shipping_street_number'] = array(
-                'label'     => __('Street number', 'woocommerce'),
-                'placeholder'   => _x('Street number', 'placeholder', 'woocommerce'),
-                'required'  => false,
-                'class'     => array('form-row-wide', 'shipping-blueplate'),
-                'clear'     => true,
-                'type'         => 'number',
-                'validate'          => array('required'),
-                'custom_attributes' => array('min' => 1, 'max' => 999)
-            );
-
-            //add street number to shipping section 
-            $fields['shipping']['shipping_building_number'] = array(
-                'label'     => __('Bulding number', 'woocommerce'),
-                'placeholder'   => _x('Building number', 'placeholder', 'woocommerce'),
-                'required'  => false,
-                'class'     => array('form-row-wide', 'shipping-blueplate'),
-                'clear'     => true,
-                'type'         => 'number',
-                'validate'          => array('required'),
-                'custom_attributes' => array('min' => 1, 'max' => 999)
-            );
-        }
-
-        private function add_billing_fields(&$fields)
-        {
-            //add zone number to billing section 
-            $fields['billing']['billing_zone_number'] = array(
-                'label'     => __('Zone number', 'woocommerce'),
-                'placeholder'   => _x('Zone number', 'placeholder', 'woocommerce'),
-                'required'  => false,
-                'class'     => array('form-row-wide', 'billing-blueplate'),
-                'clear'     => true,
-                'type'         => 'number',
-                'validate'          => array('required'),
-                'custom_attributes' => array('min' => 1, 'max' => 999)
-            );
-
-            //add street number to billing section 
-            $fields['billing']['billing_street_number'] = array(
-                'label'     => __('Street number', 'woocommerce'),
-                'placeholder'   => _x('Street number', 'placeholder', 'woocommerce'),
-                'required'  => false,
-                'class'     => array('form-row-wide', 'billing-blueplate'),
-                'clear'     => true,
-                'type'         => 'number',
-                'validate'          => array('required'),
-                'custom_attributes' => array('min' => 1, 'max' => 999)
-            );
-
-            //add street number to billing section 
-            $fields['billing']['billing_building_number'] = array(
-                'label'     => __('Bulding number', 'woocommerce'),
-                'placeholder'   => _x('Building number', 'placeholder', 'woocommerce'),
-                'required'  => false,
-                'class'     => array('form-row-wide', 'billing-blueplate'),
-                'clear'     => true,
-                'type'         => 'number',
-                'validate'          => array('required'),
-                'custom_attributes' => array('min' => 1, 'max' => 999)
-
-            );
-        }
-
         function custom_override_checkout_fields($fields)
         {
-            $this->add_shipping_fields($fields);
-            $this->add_billing_fields($fields);
+            $fields['zone_number'] = array(
+                'label'     => __('Zone number', 'woocommerce'),
+                'placeholder'   => _x('Zone number', 'placeholder', 'woocommerce'),
+                'required'  => false,
+                'class'     => array('form-row-wide', 'blueplate'),
+                'clear'     => true,
+                'type'         => 'number',
+                'validate'          => array('required'),
+                'custom_attributes' => array('min' => 1, 'max' => 999)
+            );
+
+            $fields['street_number'] = array(
+                'label'     => __('Street number', 'woocommerce'),
+                'placeholder'   => _x('Street number', 'placeholder', 'woocommerce'),
+                'required'  => false,
+                'class'     => array('form-row-wide', 'blueplate'),
+                'clear'     => true,
+                'type'         => 'number',
+                'validate'          => array('required'),
+                'custom_attributes' => array('min' => 1, 'max' => 999)
+            );
+
+            $fields['building_number'] = array(
+                'label'     => __('Bulding number', 'woocommerce'),
+                'placeholder'   => _x('Building number', 'placeholder', 'woocommerce'),
+                'required'  => false,
+                'class'     => array('form-row-wide', 'blueplate'),
+                'clear'     => true,
+                'type'         => 'number',
+                'validate'          => array('required'),
+                'custom_attributes' => array('min' => 1, 'max' => 999)
+            );
 
             return $fields;
         }
@@ -160,8 +111,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Checkout')) {
                         function billing_required_or_optional() {
 
                             if ($('#billing_country').val() == 'QA') {
-
-                                $('.billing-blueplate :input').
+                                $('p[id^=billing_].blueplate :input').
                                 each((index, element) => {
                                     $("#" + element.id).parent().parent().show();
                                     $("#" + element.id).prop('required', true);
@@ -171,7 +121,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Checkout')) {
                                 });
 
                             } else {
-                                $('.billing-blueplate :input').
+                                $('p[id^=billing_].blueplate :input').
                                 each((index, element) => {
                                     $("#" + element.id).parent().parent().hide();
                                     $("#" + element.id).removeProp('required');
@@ -188,8 +138,9 @@ if (!class_exists('Pass_Delivery_Woocommerce_Checkout')) {
 
                         function shipping_required_or_optional() {
                             if ($('#shipping_country').val() == 'QA') {
-                                $('.shipping-blueplate :input').
+                                $('p[id^=shipping_].blueplate :input').
                                 each((index, element) => {
+                                    console.log(element);
                                     $("#" + element.id).parent().parent().show();
                                     $("#" + element.id).prop('required', true);
                                     $('label[for="' + element.id + '"]').append('<abbr class="required" title="required">*</abbr>')
@@ -198,7 +149,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Checkout')) {
                                 });
 
                             } else {
-                                $('.shipping-blueplate :input').
+                                $('p[id^=shipping_].blueplate :input').
                                 each((index, element) => {
                                     $("#" + element.id).parent().parent().hide();
                                     $("#" + element.id).removeProp('required');
