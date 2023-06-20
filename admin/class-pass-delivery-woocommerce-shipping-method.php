@@ -146,8 +146,8 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
                 ],
                 "dropoffs" => [
                     [
-                        "lat" =>"25.254461",
-                        "long" => "51.519059"
+                        "lat" => $destination['lat'],
+                        "long" => $destination['lng']
                     ]
                 ]
             ];
