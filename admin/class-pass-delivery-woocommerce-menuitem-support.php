@@ -13,7 +13,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Support')) {
 
         private function add_support_to_admin_menu_item()
         {
-            add_submenu_page('passqa', __('Support', PASS_TRANSLATE_ID), __('Support', PASS_TRANSLATE_ID), 'manage_options', 'pass-support', function () {
+            add_submenu_page(Pass_Delivery_Woocommerce_Admin_Panel::$parent_slug, __('Support', PASS_TRANSLATE_ID), __('Support', PASS_TRANSLATE_ID), 'manage_options', 'pass-support', function () {
                 /*echo get_local_template_part('pass-woocommerce-shipping-admin-support-page', array(
                     'log_url' => $this->helpers->get_log_url(),
                     'chat_url' => $this->helpers->get_chat_url(),
