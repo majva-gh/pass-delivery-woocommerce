@@ -198,33 +198,6 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
                     'building_number' => $data['billing_building_number']];
         }
 
-        private function get_destination_address($data)
-        {
-            $post_data = explode('&',$data['post_data']);
-            $data = [];
-            foreach ($post_data as $key => $value) {
-                $value = explode('=',$value);
-                $data[$value[0]] = $value[1];  
-            }
-            $blue_plate = isset($data['ship_to_different_address']) ?
-                ['zone_number' => $data['shipping_zone_number'],
-                 'street_number' => $data['shipping_street_number'],
-                 'building_number' => $data['shipping_building_number']] :
-                ['zone_number' => $data['billing_zone_number'],
-                  'street_number' => $data['billing_street_number'],
-                  'building_number' => $data['billing_building_number']];
-
-            require_once(PASS_PLUGIN_DIR . '/common/class-blue-plate-library.php');
-            $blue_plate_library = new Blue_Plate_Library();
-
-            return $blue_plate_library->get_coordinates_from_blue_plate(
-                $blue_plate['zone_number'],
-                $blue_plate['street_number'],
-                $blue_plate['building_number']
-            );
-          
-        }
-
         /**
          * Processes and saves global shipping method options in the admin area.
          *
