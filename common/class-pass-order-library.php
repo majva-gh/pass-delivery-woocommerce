@@ -32,6 +32,14 @@ if (!class_exists('Pass_Order_Library')) {
             return $this->send_request();
         }
 
+        public function current_list()
+        {
+            $orders = $this->list();
+            return array_filter($orders, function ($order) {
+                return !in_array($order['order_status'], ['cancel', 'complete']);
+            });
+        }
+
         private function send_request($data = [], $attachUrl = '', $method = 'GET')
         {
             $curl = curl_init();

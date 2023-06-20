@@ -1,6 +1,6 @@
 <?php
-if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Orders')) {
-    class Pass_Delivery_Woocommerce_Menuitem_Orders
+if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Incomplete_Orders')) {
+    class Pass_Delivery_Woocommerce_Menuitem_Incomplete_Orders
     {
         public function __construct()
         {
@@ -13,7 +13,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Orders')) {
 
         private function add_support_to_admin_menu_item()
         {
-            add_submenu_page(Pass_Delivery_Woocommerce_Admin_Panel::$parent_slug, __('Orders', PASS_TRANSLATE_ID), __('Orders', PASS_TRANSLATE_ID), 'manage_options', 'pass-orders', function () {
+            add_submenu_page(Pass_Delivery_Woocommerce_Admin_Panel::$parent_slug, __('Incomplete Orders', PASS_TRANSLATE_ID), __('Incomplete Orders', PASS_TRANSLATE_ID), 'manage_options', 'pass-incomplete-orders', function () {
                 GLOBAL $pdHelper;
                 if(!$pdHelper->validate_user()) {
                     echo $pdHelper->error_for_not_found_user();
@@ -24,7 +24,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Orders')) {
                 $api_key = $pdHelper->get_setting_key('api_key');
                 require_once(PASS_PLUGIN_DIR . '/common/class-pass-order-library.php');
                 $order = new Pass_Order_Library($api_key);
-                $response = $order->list();
+                $response = $order->current_list();
 
                 echo $this->load_support_template($response);
             });
@@ -38,7 +38,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Menuitem_Orders')) {
                     <div class="container">
                         <div class="row my-5">
                             <div class="col-12 mb-3">
-                                <h3>Pass delivery orders list</h3>
+                                <h3>Pass delivery incomplete orders list</h3>
                                 <hr />
                             </div>
                 
