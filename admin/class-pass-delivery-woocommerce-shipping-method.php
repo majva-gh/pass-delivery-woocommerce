@@ -133,6 +133,10 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
          * @return void
          */
         public function calculate_shipping( $package = array() ) {
+            $destination = $this->get_destination_address($_POST);
+            if(empty($destination)) {
+                return;
+            }
 
             $this->init_settings();
             $priceData = [
