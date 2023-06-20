@@ -140,7 +140,6 @@ if (!class_exists('Pass_Delivery_Woocommerce_Checkout')) {
                             if ($('#shipping_country').val() == 'QA') {
                                 $('p[id^=shipping_].blueplate :input').
                                 each((index, element) => {
-                                    console.log(element);
                                     $("#" + element.id).parent().parent().show();
                                     $("#" + element.id).prop('required', true);
                                     $('label[for="' + element.id + '"]').append('<abbr class="required" title="required">*</abbr>')
