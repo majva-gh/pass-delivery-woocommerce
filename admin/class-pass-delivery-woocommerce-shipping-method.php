@@ -29,17 +29,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
         private function init() {
             $this->init_settings();
             $this->init_form_fields();
-
-            add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-
-            add_action( 'woocommerce_admin_billing_fields',
-                array( $this,
-                    'action_woocommerce_admin_order_fields' ),
-                10, 1 );
-            add_action( 'woocommerce_admin_shipping_fields',
-                array( $this,
-                    'action_woocommerce_admin_order_fields' ),
-                10, 1 );
+            $this->init_actions();
         }
 
         function init_form_fields() {
@@ -123,6 +113,19 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             $form_fields = array_merge($settings_base, $settings_extend);
 
             $this->form_fields = $form_fields;
+        }
+
+        function init_actions() {
+            add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+
+            add_action( 'woocommerce_admin_billing_fields',
+                array( $this,
+                    'action_woocommerce_admin_order_fields' ),
+                10, 1 );
+            add_action( 'woocommerce_admin_shipping_fields',
+                array( $this,
+                    'action_woocommerce_admin_order_fields' ),
+                10, 1 );
         }
 
         /**
