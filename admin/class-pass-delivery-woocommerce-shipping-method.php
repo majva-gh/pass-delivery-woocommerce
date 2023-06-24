@@ -29,8 +29,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
         private function init() {
             $this->init_settings();
             $this->init_form_fields();
-
-            add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+            $this->init_actions();
         }
 
         function init_form_fields() {
@@ -114,6 +113,19 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             $form_fields = array_merge($settings_base, $settings_extend);
 
             $this->form_fields = $form_fields;
+        }
+
+        function init_actions() {
+            add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+
+            add_action( 'woocommerce_admin_billing_fields',
+                array( $this,
+                    'action_woocommerce_admin_order_fields' ),
+                10, 1 );
+            add_action( 'woocommerce_admin_shipping_fields',
+                array( $this,
+                    'action_woocommerce_admin_order_fields' ),
+                10, 1 );
         }
 
         /**
@@ -270,6 +282,32 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             }
 
             return false;
+        }
+
+        // Display on the order edit page (backend)
+        function action_woocommerce_admin_order_fields( $fields ) {
+
+
+            $fields_name = [
+                'zone_number' => 'Zone Number',
+                'street_number' => 'Street Number',
+                'building_number' => 'Building Number',
+            ];
+
+            foreach($fields_name as $filed => $title) {
+                $fields[$filed] = array(
+                    'label'     => __($title, PASS_TRANSLATE_ID),
+                    'placeholder'   => _x($title, 'placeholder', PASS_TRANSLATE_ID),
+                    'required'  => false,
+                    'class'     => array('form-row-wide', 'blueplate'),
+                    'clear'     => true,
+                    'type'         => 'number',
+                    'validate'          => array('required'),
+                    'custom_attributes' => array('min' => 1, 'max' => 999)
+                );
+            }
+
+            return $fields;
         }
     }
 }
