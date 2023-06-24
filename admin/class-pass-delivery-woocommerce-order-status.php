@@ -6,6 +6,7 @@ if (!class_exists('Pass_Delivery_Woocommerce_Order_Status')) {
         public function __construct()
         {
             add_filter( 'init', array($this,'filter_wc_register_post_statuses') );
+            add_filter( 'wc_order_statuses', array($this,'filter_woocommerce_order_statuses') );
         }
 
         // Register New Order Statuses
