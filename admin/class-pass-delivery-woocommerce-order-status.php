@@ -19,5 +19,22 @@ if (!class_exists('Pass_Delivery_Woocommerce_Order_Status')) {
                 'label_count'               => _n_noop('Shipped With Pass (%s)', 'Shipped With Pass (%s)')
             ));
         }
+
+        function filter_woocommerce_order_statuses( $order_statuses ) {
+
+            $new_order_statuses = array();
+        
+            // add new order status after processing
+            foreach ( $order_statuses as $key => $status ) {
+                $new_order_statuses[ $key ] = $status;
+        
+                if ( 'wc-processing' === $key ) {
+                    $new_order_statuses['wc-shipped-with-pass'] = _x('Shipped With Pass Delivery', 'Order status', 'woocommerce');
+        
+                }
+            }
+        
+            return $new_order_statuses;
+        }
     }
 }
