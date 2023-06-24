@@ -56,6 +56,26 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             );
 
             $settings_extend = (strlen($this->settings['api_key']) < 900) ? array() : array(
+                'store_name' => array(
+                    'title'       => __( 'Store Name', PASS_TRANSLATE_ID ),
+                    'type'        => 'text',
+                    'default'     => '',
+                    'id'       => $this->id . '_store_name',
+                    'description' => sprintf( __( 'Store name use for sender name in %s order', PASS_TRANSLATE_ID ), PASS_METHOD_TITLE),
+                    'custom_attributes' => array(
+                        'required' => 'required'
+                    )
+                ),
+                'store_phone' => array(
+                    'title'       => __( 'Store Phone', PASS_TRANSLATE_ID ),
+                    'type'        => 'text',
+                    'default'     => '',
+                    'id'       => $this->id . '_store_phone',
+                    'description' => sprintf( __( 'Store phone use for sender phone in %s order', PASS_TRANSLATE_ID ), PASS_METHOD_TITLE),
+                    'custom_attributes' => array(
+                        'required' => 'required'
+                    )
+                ),
                 'store_zone_number' => array(
                     'title'       => __( 'Zone Number', PASS_TRANSLATE_ID ),
                     'type'        => 'number',
