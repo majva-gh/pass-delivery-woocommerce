@@ -40,6 +40,11 @@ if (!class_exists('Pass_Order_Library')) {
             });
         }
 
+        public function store($data)
+        {
+            return $this->send_request($data, '', 'POST');
+        }
+
         private function send_request($data = [], $attachUrl = '', $method = 'GET')
         {
             $curl = curl_init();

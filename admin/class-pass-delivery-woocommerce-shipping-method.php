@@ -56,6 +56,26 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             );
 
             $settings_extend = (strlen($this->settings['api_key']) < 900) ? array() : array(
+                'store_name' => array(
+                    'title'       => __( 'Store Name', PASS_TRANSLATE_ID ),
+                    'type'        => 'text',
+                    'default'     => '',
+                    'id'       => $this->id . '_store_name',
+                    'description' => sprintf( __( 'Store name use for sender name in %s order', PASS_TRANSLATE_ID ), PASS_METHOD_TITLE),
+                    'custom_attributes' => array(
+                        'required' => 'required'
+                    )
+                ),
+                'store_phone' => array(
+                    'title'       => __( 'Store Phone', PASS_TRANSLATE_ID ),
+                    'type'        => 'text',
+                    'default'     => '',
+                    'id'       => $this->id . '_store_phone',
+                    'description' => sprintf( __( 'Store phone use for sender phone in %s order', PASS_TRANSLATE_ID ), PASS_METHOD_TITLE),
+                    'custom_attributes' => array(
+                        'required' => 'required'
+                    )
+                ),
                 'store_zone_number' => array(
                     'title'       => __( 'Zone Number', PASS_TRANSLATE_ID ),
                     'type'        => 'number',
@@ -126,6 +146,8 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
                 array( $this,
                     'action_woocommerce_admin_order_fields' ),
                 10, 1 );
+
+            add_action('woocommerce_checkout_order_created', array( $this, 'action_woocommerce_checkout_order_created' ));
         }
 
         /**
@@ -308,6 +330,57 @@ if (!class_exists('Pass_Delivery_Woocommerce_Shipping_Method')) {
             }
 
             return $fields;
+        }
+
+        function action_woocommerce_checkout_order_created ( $order ) {
+            $meta = get_post_meta($order->id);
+
+            if(!isset($meta['pass_delivery_order_id'])) {
+                $this->init_settings();
+
+
+                require_once(PASS_PLUGIN_DIR . '/common/class-blue-plate-library.php');
+                $blue_plate_library = new Blue_Plate_Library();
+                $address = $blue_plate_library->get_address(
+                    $meta['_shipping_zone_number'][0],
+                    $meta['_shipping_street_number'][0],
+                    $meta['_shipping_building_number'][0]
+                );
+
+                $orderData = [
+                    "addresses" => [
+                        "pickup" => [
+                            "lat" => $this->settings['lat'],
+                            "long" => $this->settings['lng'],
+                            "name" => $this->settings['store_name'],
+                            "phone" => $this->settings['store_phone'],
+                            "address" => $this->settings['address'],
+                        ],
+                        "dropoffs" => [
+                            [
+                                "lat" => $address['lat'],
+                                "long" => $address['lng'],
+                                "name" => $meta['_shipping_first_name'][0] . ' ' . $meta['_shipping_last_name'][0],
+                                "phone" => $meta['_billing_phone'][0],
+                                "address" => $address['address']
+                            ]
+                        ]
+                    ]
+                ];
+
+                require_once(PASS_PLUGIN_DIR . '/common/class-pass-order-library.php');
+                $passOrder = new Pass_Order_Library($this->settings['api_key']);
+                $response = $passOrder->store($orderData);
+                if (empty($response)) {
+                    $this->add_error(__('Can not crate the order in shipping method', PASS_TRANSLATE_ID));
+                    die();
+                }
+
+
+                update_post_meta($order->id, '_shipping_address_latitude', $address['lat']);
+                update_post_meta($order->id, '_shipping_address_longitude', $address['lng']);
+                add_post_meta($order->id, 'pass_delivery_order_id', $response['order_id']);
+            }
         }
     }
 }
