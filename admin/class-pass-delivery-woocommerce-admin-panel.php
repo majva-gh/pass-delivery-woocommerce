@@ -12,6 +12,8 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
 
             add_action('admin_menu', array($this, 'admin_menu_items'));
             add_filter('plugin_action_links_' . PASS_PLUGIN_BASENAME, array($this, 'action_links'));
+
+            $this->add_extra_items();
         }
 
         /**
@@ -68,6 +70,15 @@ if (!class_exists('Pass_Delivery_Woocommerce_Admin_Panel')) {
 
             return array_merge( $plugin_links, $links );
 
+        }
+        private function add_extra_items()
+        {
+            $this->orders_status();
+        }
+        private function orders_status()
+        {
+            require_once __DIR__ . '/class-pass-delivery-woocommerce-order-status.php';
+            new Pass_Delivery_Woocommerce_Order_Status();
         }
     }
 }
